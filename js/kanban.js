@@ -16,19 +16,15 @@ add_btn.addEventListener('click', () => {
 });
 
 const create_item = () => {
-  var item = document.createElement('div');
+  let item = document.createElement('div');
   item.classList.add('item');
   item.id = "item-" + order;
   item.draggable = true;
-  item.addEventListener('dragstart', (event) => {
-    return event.DataTransfer.setData('text', event.target.id);
-  })
-  item.addEventListener('dragend', (event) => {
-    return event.DataTransfer.clearData();
-  })
-  var input = document.createElement('input');
+  item.addEventListener('dragstart', event => event.DataTransfer.setData('text', event.target.id))
+  item.addEventListener('dragend', event => event.DataTransfer.clearData())
+  let input = document.createElement('input');
   item.appendChild(input);
-  var save_btn = document.createElement('button');
+  let save_btn = document.createElement('button');
   save_btn.innerHTML = 'Save';
   save_btn.addEventListener('click', () => {
     error.innerHTML = '';
@@ -39,18 +35,16 @@ const create_item = () => {
     } else {
       error.innerHTML = message;
     }
-  })
+  });
   item.appendChild(save_btn);
   return item;
 };
 
 document.querySelectorAll('.drop').forEach(element => {
-  element.addEventListener('drop', (event) => {
+  element.addEventListener('drop', event => {
     event.preventDefault();
-  })
-  const id = event.DataTransfer.getData('text');
-  document.getElementById(id).appendChild(event.target);
-  element.addEventListener('dragover', (event) => {
-    event.preventDefault();
-  })
+    const id = event.DataTransfer.getData('text');
+    event.target.appendChild(document.getElementById(id));
+  });
+  element.addEventListener('dragover', event => event.preventDefault())
 });
