@@ -19,22 +19,22 @@ const create_item = () => {
   var item = document.createElement('div');
   item.classList.add('item');
   item.id = "item-" + order;
-  item.setAttribute('draggable', true);
+  item.draggable = true;
   item.addEventListener('dragstart', (event) => {
-    return event.setData('text');
+    return event.DataTransfer.setData('text', event.target.id);
   })
   item.addEventListener('dragend', (event) => {
-    return event.clearData();
+    return event.DataTransfer.clearData();
   })
   var input = document.createElement('input');
   item.appendChild(input);
   var save_btn = document.createElement('button');
   save_btn.innerHTML = 'Save';
   save_btn.addEventListener('click', () => {
-    error = '';
+    error.innerHTML = '';
     if (value !== '') {
       order += 1;
-      item.innerHTML = value;
+      item.innerHTML = input.value;
       adding = false;
     } else {
       error.innerHTML = message;
@@ -48,7 +48,7 @@ document.querySelectorAll('.drop').forEach(element => {
   element.addEventListener('drop', (event) => {
     event.preventDefault();
   })
-  const id = event.getData();
+  const id = event.DataTransfer.getData('text');
   document.getElementById(id).appendChild(event.target);
   element.addEventListener('dragover', (event) => {
     event.preventDefault();
